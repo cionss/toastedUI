@@ -357,6 +357,7 @@ end);
 --| Alpha slider and input:
 
 alphaSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	alpha = alphaSlider.Handle.Position.X.Scale;
     alphaInput.Text = tostring(round(alpha, 2));
 	ColorPreview.BackgroundTransparency = alpha;
@@ -392,6 +393,7 @@ end)
 --| Value slider and input:
 
 valueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	value = 1 - valueSlider.Handle.Position.Y.Scale;
 	currentColorMode = "HSV";
     UpdateColorSystems(valueSlider);
@@ -414,6 +416,7 @@ end);
 --| RGB sliders and inputs:
 
 redSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	red = redSlider.Handle.Position.X.Scale * 255;
 	currentColorMode = "RGB";
     UpdateColorSystems(redSlider);
@@ -434,6 +437,7 @@ redInput.FocusLost:Connect(function()
 end);
 
 greenSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	green = greenSlider.Handle.Position.X.Scale * 255;
 	currentColorMode = "RGB";
     UpdateColorSystems(greenSlider);
@@ -454,6 +458,7 @@ greenInput.FocusLost:Connect(function()
 end);
 
 blueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	blue = blueSlider.Handle.Position.X.Scale * 255;
 	currentColorMode = "RGB";
     UpdateColorSystems(blueSlider);
@@ -476,6 +481,7 @@ end);
 --| HSV sliders and inputs:
 
 hueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	hue = hueSlider.Handle.Position.X.Scale * 360;
 	currentColorMode = "HSV";
     UpdateColorSystems(hueSlider);
@@ -496,6 +502,7 @@ hueInput.FocusLost:Connect(function()
 end);
 
 saturationSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	saturation = saturationSlider.Handle.Position.X.Scale;
 	currentColorMode = "HSV";
     UpdateColorSystems(saturationSlider);
@@ -516,6 +523,7 @@ saturationInput.FocusLost:Connect(function()
 end);
 
 hsvValueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+    task.wait();
 	value = hsvValueSlider.Handle.Position.X.Scale;
 	currentColorMode = "HSV";
     UpdateColorSystems(hsvValueSlider);
