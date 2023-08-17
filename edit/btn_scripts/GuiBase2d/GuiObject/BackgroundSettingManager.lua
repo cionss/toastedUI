@@ -11,7 +11,7 @@ function updateUIs()
 	
 	local toStringColor = tostring(math.round(curColor.R * 255))..", "..tostring(math.round(curColor.G * 255))..", "..tostring(math.round(curColor.B * 255))
 	thisColorSettings.ColorRGB.Text = toStringColor;
-	thisColorSettings.ColorA.Text = tostring((curAlpha));
+	thisColorSettings.ColorA.Text = tostring(math.round(curAlpha * 100) / 100);
 
     EditCore:Apply("BackgroundColor3", curColor, "GuiObject");
     EditCore:Apply("BackgroundTransparency", curAlpha, "GuiObject");
