@@ -17,6 +17,9 @@ local ClassHierarchy = {
             ["Frame"] = {},
             ["ScrollingFrame"] = {}
         }
+    },
+    ["UIObject"] = {
+        
     }
 };
 

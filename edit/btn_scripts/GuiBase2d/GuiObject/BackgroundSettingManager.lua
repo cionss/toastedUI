@@ -1,3 +1,4 @@
+local TweenService = game:GetService("TweenService");
 local curColor = Color3.fromRGB(255, 255, 255);
 local curAlpha = 0;
 
@@ -73,4 +74,18 @@ script.Parent.ColorA.FocusLost:Connect(function()
 	else
 		text = curAlpha;
 	end
+end);
+
+--| Help frame:
+
+local bgTitle = script.Parent.BackgroundTitle;
+local helpFrame = script.Parent.HelpFrame;
+
+bgTitle.MouseEnter:Connect(function()
+	bgTitle.MouseLeave:Connect(function()
+		helpFrame.Visible = false;
+		return;
+	end);
+	task.wait(1);
+	helpFrame.Visible = true;
 end);

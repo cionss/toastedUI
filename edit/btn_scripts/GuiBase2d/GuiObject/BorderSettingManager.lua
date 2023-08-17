@@ -17,7 +17,7 @@ function updateUIs()
 	EditCore:Apply("BorderMode", Enum.BorderMode[curMode], "GuiObject");
 end
 
-function ConvertTextToRGB(text)
+function ConvertTextToRGB(text: string)
 	local formatSuccess = true;
 	local result;
 	local success, err = pcall(function()
