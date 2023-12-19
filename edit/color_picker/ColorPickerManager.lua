@@ -546,23 +546,12 @@ local Buttons = ColorPickerGui.TabButtons;
 local Windows = {ColorWheel, RGBWindow, HSVWindow}
 
 for i, v: GuiObject in pairs(Buttons:GetChildren()) do
-	local hovering = false;
-	v.MouseEnter:Connect(function(): nil
-		hovering = true;
-	end);
-
-	v.MouseLeave:Connect(function(): nil
-		hovering = false;
-	end);
-
-	mouse.Button1Up:Connect(function(): nil
-		if hovering then
-			for _, window: Instance in pairs(Windows) do
-				if window.Name == v.Name then
-					window.Visible = true;
-				else
-					window.Visible = false;
-				end
+	v.MouseButton1Click:Connect(function(): nil
+		for _, window: Instance in pairs(Windows) do
+			if window.Name == v.Name then
+				window.Visible = true;
+			else
+				window.Visible = false;
 			end
 		end
 	end);
@@ -661,6 +650,7 @@ function ColorPicker:Prompt(curColor: Color3, curAlpha: number): any
 	red, green, blue = curColor.R * 255, curColor.G * 255, curColor.B * 255;
 	alpha = curAlpha;
 	UpdateColorSystems();
+	alphaSlider:Slide(alpha);
 
 	ColorPickerGui.Visible = true;
 

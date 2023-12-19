@@ -27,6 +27,7 @@ function Slider.new(mouse: PluginMouse, inst: Frame, handle: TextButton, directi
 
     self.MouseDown = false;
     self.Hovering = false;
+    self.HoveringSlider = false;
 
     self.Handle.MouseEnter:Connect(function(): nil
         self.Hovering = true;
@@ -36,8 +37,16 @@ function Slider.new(mouse: PluginMouse, inst: Frame, handle: TextButton, directi
         self.Hovering = false;
     end);
 
+    self.Slider.MouseEnter:Connect(function(): nil
+        self.HoveringSlider = true;
+    end);
+
+    self.Slider.MouseLeave:Connect(function(): nil
+        self.HoveringSlider = false;
+    end);
+
     mouse.Button1Down:Connect(function(): nil
-        if self.Hovering then
+        if self.Hovering or self.HoveringSlider then
             self.MouseDown = true;
             repeat
                 local mousePos = self.Mouse[self.Direction];

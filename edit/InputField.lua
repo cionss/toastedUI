@@ -256,7 +256,7 @@ function NumberInput:Update(newValue: any): nil
             self.Instance.Text = "-";
         else
             self.Value = validNum;
-            self.Instance.Text = tostring(validNum);
+            self.Instance.Text = tostring(math.round(validNum * 100) / 100);
         end
         self:UpdateLinks();
     end
