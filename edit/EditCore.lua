@@ -23,7 +23,7 @@ local ClassHierarchy = {
     }
 };
 
-function GetClassesOfInstance(inst: Instance)
+function GetClassesOfInstance(inst: Instance): table
     local classes = {};
     if inst:IsA("GuiBase2d") then
         table.insert(classes, "GuiBase2d");
@@ -59,18 +59,20 @@ function GetClassesOfInstance(inst: Instance)
     return classes;
 end
 
-function recurseClasses(classes: table, t: table, inst: Instance)
+function recurseClasses(classes: table, t: table, inst: Instance): nil
     for key, value in pairs(t) do
         for _, class: string in pairs(classes) do
             if class == key then
                 inst[key].Visible = true;
                 recurseClasses(classes, value, inst[key]);
+            else
+                inst[key].Visible = false;
             end
         end
     end
 end
 
-function EditCore:Select(selection: table)
+function EditCore:Select(selection: table): nil
     table.clear(EditCore.Selection);
     for index: number, v: Instance in pairs(selection) do
         --| Get selection classes:
@@ -89,7 +91,7 @@ function EditCore:Select(selection: table)
     end
 end
 
-function EditCore:Apply(property: string, value: any, classType: string)
+function EditCore:Apply(property: string, value: any, classType: string): nil
     for _, item: table in pairs(EditCore.Selection) do
         local inst, classes = table.unpack(item);
 
@@ -100,5 +102,11 @@ function EditCore:Apply(property: string, value: any, classType: string)
         end
     end
 end
+
+local Selection = game:GetService("Selection");
+
+Selection.SelectionChanged:Connect(function(): nil
+    EditCore:Select(Selection:Get());
+end);
 
 return EditCore;

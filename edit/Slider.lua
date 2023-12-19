@@ -3,7 +3,14 @@ local meta = {
     ["__index"] = Slider
 };
 
-function Slider.new(mouse: PluginMouse, inst: Frame, handle: TextButton, direction: string)
+type Slider = {
+    ["Mouse"]: PluginMouse,
+    ["Slider"]: Frame,
+    ["Handle"]: TextButton,
+    ["Direction"]: string
+}
+
+function Slider.new(mouse: PluginMouse, inst: Frame, handle: TextButton, direction: string): Slider
     local self = setmetatable({}, meta);
 
     self.Mouse = mouse;
@@ -21,15 +28,15 @@ function Slider.new(mouse: PluginMouse, inst: Frame, handle: TextButton, directi
     self.MouseDown = false;
     self.Hovering = false;
 
-    self.Handle.MouseEnter:Connect(function()
+    self.Handle.MouseEnter:Connect(function(): nil
         self.Hovering = true;
     end);
 
-    self.Handle.MouseLeave:Connect(function()
+    self.Handle.MouseLeave:Connect(function(): nil
         self.Hovering = false;
     end);
 
-    mouse.Button1Down:Connect(function()
+    mouse.Button1Down:Connect(function(): nil
         if self.Hovering then
             self.MouseDown = true;
             repeat
@@ -43,14 +50,14 @@ function Slider.new(mouse: PluginMouse, inst: Frame, handle: TextButton, directi
         end
     end);
 
-    mouse.Button1Up:Connect(function()
+    mouse.Button1Up:Connect(function(): nil
         self.MouseDown = false;
     end);
 
     return self;
 end
 
-function Slider:Slide(unit: number)
+function Slider:Slide(unit: number): nil
     unit = math.clamp(unit, 0, 1);
 
     if self.Direction == "X" then

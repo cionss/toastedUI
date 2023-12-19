@@ -16,7 +16,7 @@ local blue = 255;
 local alpha = 0;
 local hex = "FFFFFF"
 
-local function ConvertMode(val1: number, val2: number, val3: number, target: string)
+local function ConvertMode(val1: number, val2: number, val3: number, target: string): any
 	if target == "HSV" then
 		--| RGB to HSV:
 		local r, g, b = val1 / 255, val2 / 255, val3 / 255;
@@ -67,10 +67,10 @@ local function ConvertMode(val1: number, val2: number, val3: number, target: str
 	end
 end
 
-local function RGBtoHex(r: number, g: number, b: number)
+local function RGBtoHex(r: number, g: number, b: number): string
 	local hexadecimal = "#";
 
-	for _, v in pairs({r, g, b}) do
+	for _, v: number in pairs({r, g, b}) do
 		local newhex = "";
 
 		while v > 0 do
@@ -91,7 +91,7 @@ local function RGBtoHex(r: number, g: number, b: number)
 	return hexadecimal;
 end
 
-local function HextoRGB(hex: string)
+local function HextoRGB(hex: string): any
 	hex = hex:gsub("#", "");
 	return tonumber("0x"..hex:sub(1, 2)), tonumber("0x"..hex:sub(3, 4)), tonumber("0x"..hex:sub(5, 6));
 end
@@ -116,7 +116,7 @@ local mouseClickingWheel = false;
 local mouseHoveringWheel = false;
 
 local WheelRadius = InteractiveWheel.AbsoluteSize.Y / 2;
-InteractiveWheel:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+InteractiveWheel:GetPropertyChangedSignal("AbsoluteSize"):Connect(function(): nil
 	WheelRadius = InteractiveWheel.AbsoluteSize.Y / 2;
 end);
 
@@ -155,12 +155,12 @@ local hsvValueInput = HSVWindow.ValueInput;
 
 
 
-function round(num: number, decimalPoints: number)
+function round(num: number, decimalPoints: number): number
 	local inc = 10 ^ decimalPoints;
 	return (math.round(num * inc)) / inc;
 end
 
-local function RenderColor()
+local function RenderColor(): nil
 	if currentColorMode == "HSV" then
 		ColorPreview.BackgroundColor3 = Color3.fromHSV(hue / 360, saturation, value);
 		red, green, blue = ConvertMode(hue, saturation, value, "RGB");
@@ -178,7 +178,7 @@ end
 
 local updateDebounce = false;
 
-function UpdateColorSystems(exclusion: Instance)
+function UpdateColorSystems(exclusion: Instance): nil
 	if updateDebounce then
 		return;
 	end
@@ -287,15 +287,15 @@ end
 
 --| Color wheel:
 
-InteractiveWheel.MouseEnter:Connect(function()
+InteractiveWheel.MouseEnter:Connect(function(): nil
 	mouseHoveringWheel = true;
 end);
 
-InteractiveWheel.MouseLeave:Connect(function()
+InteractiveWheel.MouseLeave:Connect(function(): nil
 	mouseHoveringWheel = false;
 end);
 
-mouse.Button1Down:Connect(function()
+mouse.Button1Down:Connect(function(): nil
 	if mouseHoveringWheel then
 		mouseClickingWheel = true;
 		repeat
@@ -349,19 +349,19 @@ mouse.Button1Down:Connect(function()
 	end
 end);
 
-mouse.Button1Up:Connect(function()
+mouse.Button1Up:Connect(function(): nil
 	mouseClickingWheel = false;
 end);
 
 --| Alpha slider and input:
 
-alphaSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+alphaSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	alpha = alphaSlider.Handle.Position.X.Scale;
 	alphaInput.Text = tostring(round(alpha, 2));
 	ColorPreview.BackgroundTransparency = alpha;
 end);
 
-alphaInput.FocusLost:Connect(function()
+alphaInput.FocusLost:Connect(function(): nil
 	local newText = alphaInput.Text;
 	if tonumber(newText) ~= nil then
 		local number = tonumber(newText);
@@ -374,8 +374,8 @@ end);
 
 --| Hex input:
 
-hexInput.FocusLost:Connect(function()
-	local success = pcall(function()
+hexInput.FocusLost:Connect(function(): nil
+	local success = pcall(function(): nil
 		local try = Color3.fromHex(hexInput.Text);
 		try = nil;
 	end);
@@ -390,13 +390,13 @@ end)
 
 --| Value slider and input:
 
-valueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+valueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	value = 1 - valueSlider.Handle.Position.Y.Scale;
 	currentColorMode = "HSV";
 	UpdateColorSystems(valueSlider);
 end);
 
-valueInput.FocusLost:Connect(function()
+valueInput.FocusLost:Connect(function(): nil
 	local newText = valueInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -412,13 +412,13 @@ end);
 
 --| RGB sliders and inputs:
 
-redSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+redSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	red = redSlider.Handle.Position.X.Scale * 255;
 	currentColorMode = "RGB";
 	UpdateColorSystems(redSlider);
 end);
 
-redInput.FocusLost:Connect(function()
+redInput.FocusLost:Connect(function(): nil
 	local newText = redInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -433,13 +433,13 @@ redInput.FocusLost:Connect(function()
 	end
 end);
 
-greenSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+greenSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	green = greenSlider.Handle.Position.X.Scale * 255;
 	currentColorMode = "RGB";
 	UpdateColorSystems(greenSlider);
 end);
 
-greenInput.FocusLost:Connect(function()
+greenInput.FocusLost:Connect(function(): nil
 	local newText = greenInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -454,13 +454,13 @@ greenInput.FocusLost:Connect(function()
 	end
 end);
 
-blueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+blueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	blue = blueSlider.Handle.Position.X.Scale * 255;
 	currentColorMode = "RGB";
 	UpdateColorSystems(blueSlider);
 end);
 
-blueInput.FocusLost:Connect(function()
+blueInput.FocusLost:Connect(function(): nil
 	local newText = blueInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -477,13 +477,13 @@ end);
 
 --| HSV sliders and inputs:
 
-hueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+hueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	hue = hueSlider.Handle.Position.X.Scale * 360;
 	currentColorMode = "HSV";
 	UpdateColorSystems(hueSlider);
 end);
 
-hueInput.FocusLost:Connect(function()
+hueInput.FocusLost:Connect(function(): nil
 	local newText = hueInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -498,13 +498,13 @@ hueInput.FocusLost:Connect(function()
 	end
 end);
 
-saturationSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+saturationSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	saturation = saturationSlider.Handle.Position.X.Scale;
 	currentColorMode = "HSV";
 	UpdateColorSystems(saturationSlider);
 end);
 
-saturationInput.FocusLost:Connect(function()
+saturationInput.FocusLost:Connect(function(): nil
 	local newText = saturationInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -519,13 +519,13 @@ saturationInput.FocusLost:Connect(function()
 	end
 end);
 
-hsvValueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function()
+hsvValueSlider.Handle:GetPropertyChangedSignal("Position"):Connect(function(): nil
 	value = hsvValueSlider.Handle.Position.X.Scale;
 	currentColorMode = "HSV";
 	UpdateColorSystems(hsvValueSlider);
 end);
 
-hsvValueInput.FocusLost:Connect(function()
+hsvValueInput.FocusLost:Connect(function(): nil
 	local newText = hsvValueInput.Text;
 
 	if tonumber(newText) ~= nil then
@@ -545,19 +545,19 @@ end);
 local Buttons = ColorPickerGui.TabButtons;
 local Windows = {ColorWheel, RGBWindow, HSVWindow}
 
-for i, v in pairs(Buttons:GetChildren()) do
+for i, v: GuiObject in pairs(Buttons:GetChildren()) do
 	local hovering = false;
-	v.MouseEnter:Connect(function()
+	v.MouseEnter:Connect(function(): nil
 		hovering = true;
 	end);
 
-	v.MouseLeave:Connect(function()
+	v.MouseLeave:Connect(function(): nil
 		hovering = false;
 	end);
 
-	mouse.Button1Up:Connect(function()
+	mouse.Button1Up:Connect(function(): nil
 		if hovering then
-			for _, window in pairs(Windows) do
+			for _, window: Instance in pairs(Windows) do
 				if window.Name == v.Name then
 					window.Visible = true;
 				else
@@ -574,15 +574,15 @@ local handle = ColorPickerGui.Handle;
 local hoveringHandle = false
 local holdingHandle = false
 
-handle.MouseEnter:Connect(function()
+handle.MouseEnter:Connect(function(): nil
 	hoveringHandle = true;
 end);
 
-handle.MouseLeave:Connect(function()
+handle.MouseLeave:Connect(function(): nil
 	hoveringHandle = false;
 end);
 
-mouse.Button1Down:Connect(function()
+mouse.Button1Down:Connect(function(): nil
 	if hoveringHandle then
 		holdingHandle = true;
 		local mousePos = Vector2.new(mouse.X, mouse.Y);
@@ -597,7 +597,7 @@ mouse.Button1Down:Connect(function()
 	end
 end);
 
-mouse.Button1Up:Connect(function()
+mouse.Button1Up:Connect(function(): nil
 	holdingHandle = false;
 end)
 
@@ -619,33 +619,33 @@ local closeXTweenOut = TweenService:Create(closeX, TweenInfo.new(0.2), {
 
 local hoveringCloseX = false;
 
-closeX.MouseEnter:Connect(function()
+closeX.MouseEnter:Connect(function(): nil
 	closeXTweenIn:Play();
 	hoveringCloseX = true;
 end);
 
-closeX.MouseLeave:Connect(function()
+closeX.MouseLeave:Connect(function(): nil
 	closeXTweenOut:Play();
 	hoveringCloseX = false;
 end);
 
-mouse.Button1Up:Connect(function()
+mouse.Button1Up:Connect(function(): nil
 	if hoveringCloseX then
 		FinishedEvent:Fire("x");
 	end
 end);
 
-for _, button in pairs(confirmButtons) do
+for _, button: GuiObject in pairs(confirmButtons) do
 	local hovering = false;
-	button.MouseEnter:Connect(function()
+	button.MouseEnter:Connect(function(): nil
 		hovering = true;
 	end);
 
-	button.MouseLeave:Connect(function()
+	button.MouseLeave:Connect(function(): nil
 		hovering = false;
 	end);
 
-	mouse.Button1Up:Connect(function()
+	mouse.Button1Up:Connect(function(): nil
 		if hovering then
 			FinishedEvent:Fire(button.Name);
 		end
@@ -656,7 +656,7 @@ UpdateColorSystems();
 
 --| Prompting color picker and returning values:
 
-function ColorPicker:Prompt(curColor: Color3, curAlpha: number)
+function ColorPicker:Prompt(curColor: Color3, curAlpha: number): any
 	currentColorMode = "RGB";
 	red, green, blue = curColor.R * 255, curColor.G * 255, curColor.B * 255;
 	alpha = curAlpha;

@@ -4,15 +4,15 @@ local mouse = User:GetMouse();
 local hoveringHandle = false;
 local holdingHandle = false;
 
-script.Parent.MouseEnter:Connect(function()
+script.Parent.MouseEnter:Connect(function(): nil
 	hoveringHandle = true;
 end);
 
-script.Parent.MouseLeave:Connect(function()
+script.Parent.MouseLeave:Connect(function(): nil
 	hoveringHandle = false;
 end);
 
-mouse.Button1Down:Connect(function()
+mouse.Button1Down:Connect(function(): nil
 	if hoveringHandle then
 		holdingHandle = true
 		local mousePos = Vector2.new(mouse.X, mouse.Y);
@@ -27,6 +27,6 @@ mouse.Button1Down:Connect(function()
 	end
 end);
 
-mouse.Button1Up:Connect(function()
+mouse.Button1Up:Connect(function(): nil
 	holdingHandle = false;
 end);

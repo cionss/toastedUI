@@ -3,7 +3,7 @@ local ParentFrame = UIListLayout.Parent;
 
 local lockDirection = "Y"; --| X, Y, or XY
 
-UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function(): nil
 	local newContentSize = UIListLayout.AbsoluteContentSize;
 	
 	if lockDirection == "X" then
