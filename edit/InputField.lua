@@ -236,7 +236,7 @@ function NumberInput.new(propertyName: string, value: any, min: number, max: num
     self.Instance.FocusLost:Connect(function(): nil
         local text = self.Instance.Text;
         if tostring(text) ~= nil then
-            local newNumber = math.clamp(math.round(tonumber(text) * 1000) / 1000, 0, 1);
+            local newNumber = math.clamp(math.round(tonumber(text) * 1000) / 1000, self.Min, self.Max);
             self:Update(newNumber);
         end
     end);

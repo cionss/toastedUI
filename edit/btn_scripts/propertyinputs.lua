@@ -53,7 +53,7 @@ InputField.NumberInput.new(
     "BorderSizePixel",
     0,
     0,
-    math.huge,
+    100000,
     "number",
     appearance_GuiObject.Border.SizeInput
 );
